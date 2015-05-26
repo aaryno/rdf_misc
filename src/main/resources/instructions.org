@@ -1,0 +1,223 @@
+* Introduction
+
+The purpose of this exercise is to implement several functions that
+operate on graphs of RDF data. In addition to this instructions file,
+there are two other files related to the exercise.
+
+- starfleet.txt :: This is the sample data file. This contains a
+                   representation of the sample RDF graph that can be
+                   used natively in Clojure, or easily parsed into
+                   collections in most languages.
+- starfleet.ttl :: This is the turtle-syntax version of the sample
+                   data. It's somewhat more human-readable, and
+                   contains the prefix imports which, although not
+                   needed, do give some information about where the
+                   URIs are coming from.
+
+* Basics of RDF
+
+An RDF graph is natively represented as a collection of triples
+(3-tuples) in the form of: [subject predicate object] -- or [s p o] as
+a common abbreviation.
+
+Some basic rules:
+
+RDF triple Subjects and Predicates are always Entities. Entities are
+referenced as URIs. Triple Objects can be either Entities or literal
+values (strings, numbers, etc).
+
+A collection of triples works on set semantics - the order of triples
+within the collection is undefined, and repeating a triple is
+idempotent.
+
+Here is an example RDF triple, from the base RDF namespace:
+
+#+BEGIN_SRC rdf
+[<http://www.w3.org/1999/02/22-rdf-syntax-ns#Property>
+ <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+ <http://www.w3.org/2000/01/rdf-schema#Class>]
+#+END_SRC
+
+** Abbreviated Prefixes
+
+However, repeatedly stating these long URIs, many of which have common
+roots, is wasteful. So we use a prefixed syntax. If you look at the
+top of starfleet.ttl, you see a number of prefix declarations,
+including:
+
+#+BEGIN_SRC ttl
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+#+END_SRC
+
+With these prefixes, we can rewrite the example triple as follows:
+
+#+BEGIN_SRC rdf
+[rdf:Property rdf:type rdfs:Class]
+#+END_SRC
+
+** Clojure Syntax
+
+In the starfleet.txt data file, we make a further transformation,
+converting these prefixed URIs into Clojure keywords. In this format,
+the example triple looks like:
+
+#+BEGIN_SRC clojure
+[:rdf/Property :rdf/type :rdfs/Class]
+#+END_SRC
+
+For those unfamiliar with Clojure, keywords are a type of symbol with
+two parts: optional namespace, and name. Keywords are colon-prefixed,
+and the optional namespace part will be followed by a / and the
+name. Here we use keywords to represent RDF entity URIs, with the URI
+prefix as the keyword namespace and the entity name as the keyword name.
+
+The Clojure format will be used for the remainder of this document.
+
+** RDF Classes
+
+Classes in RDF are themselves entities. They belong to the class
+of :rdfs/Class. The classes to which an entity directly belongs are
+specified with the :rdf/type predicate. Sub-classing is also possible,
+through the :rdfs/subClassOf predicate. This set of triples defines a
+class, :example/Thing, which is a subClass of :example/SuperThing :
+
+#+BEGIN_SRC clojure
+[[:example/Thing :rdf/type :rdfs/Class]
+ [:example/Thing :rdfs/subClassOf :example/SuperThing]
+ [:example/SuperThing :rdf/type :rdfs/Class]]
+#+END_SRC
+
+If an entity belongs to a class, it also belongs to every class for
+which that class is a subclass, recursively.
+
+Child classes inherit the properties of their parent classes, as well
+as membership.
+
+Classes have set semantics in RDF.
+
+The entity :owl/Class is a subclass of :rdfs/Class.
+
+** RDF Properties
+
+Things that can be used as triple Predicates are called
+Properties. They belong to the class :rdf/Property. Two of their key
+attributes are :rdfs/domain and :rdfs/range.
+
+- :rdfs/domain :: Specifies what classes or types can be the Subject
+                  of triples in which the Property is the Predicate.
+- :rdfs/range :: Specifies what classes or types can be the Object of
+                 triples in which the Property is the Predicate.
+
+This set of triples defines a Property, :example/hasColor, and defines
+its range and domain. Then it shows a valid use of the property.
+
+#+BEGIN_SRC clojure
+[[:example/hasColor :rdf/type :rdf/Property]
+ [:example/hasColor :rdfs/domain :example/Car]
+ [:example/hasColor :rdfs/range :example/Color]
+ [:example/Car :rdf/type :rdfs/Class]
+ [:example/Ferrari :rdf/type :example/Car]
+ [:example/Red :rdf/type :example/Color]
+ [:example/Ferrari :example/hasColor :example/Red]]
+#+END_SRC
+
+The triple =[:example/Ferrari :example/hasColor :example/Red]= is
+valid, because:
+- The domain of :example/hasColor is :example/Car, and the Subject
+  is :example/Ferrari which belongs to the class of :example/Car.
+- The range of :example/hasColor is :example/Color, and the Object
+  is :example/Red which belongs to the class of :example/Color.
+
+The entity :owl/DatatypeProperty is a subclass of :rdf/Property, and
+carries the additional restriction that its range must be a literal
+type.
+
+The entity :owl/ObjectProperty is a subclass of :rdf/Property, and
+carries the additional restriction that its range must be a class.
+
+** RDF Literal Values
+
+RDF borrows its value types from the XML Schema Definition, which is
+conventionally prefixed as xsd. In the sample data file, only one of
+these types is used: :xsd/string which is the basic string type. There
+are many others, including various numeric types, date and time types,
+etc., but for the purposes of this exercise :xsd/string is the only
+one that is relevant.
+
+Properties - particularly those of type :owl/DatatypeProperty - can
+have a range of :xsd/string.
+
+** Summary of the Semantics
+
+*** :rdf/type
+
+Specifies Entity class membership. An Entity can be the direct member
+of multiple classes. In other words, this is valid:
+
+#+BEGIN_SRC clojure
+[[:example/Joe :rdf/type :example/Human]
+ [:example/Joe :rdf/type :example/Plumber]]
+#+END_SRC
+
+It says that :example/Joe belongs to the classes of :example/Human
+and :example/Plumber.
+
+*** :rdfs/Class
+
+The class of Classes.
+
+*** :rdfs/subClassOf
+
+Property specifying subclass relationship, where a triple in the form
+of =[:example/ChildClass :rdfs/subClassOf :example/ParentClass]=
+specifies that :example/ChildClass is a subclass
+of :example/ParentClass, and therefore :example/ParentClass is a
+superclass of :example/ChildClass.
+
+A class can be the subclass of multiple parent classes.
+
+*** :rdfs/domain and :rdfs/range
+
+For a Property P, :rdfs/domain specifies that any entities that are
+the Subject of triples with predicate P must belong to the class
+specified by :rdfs/domain, and :rdfs/range specifies that entities
+that are the Object of the triples with predicate P must belong to the
+class specified by :rdfs/range.
+
+*** :owl/Class
+
+This is a subclass of :rdfs/Class
+
+*** :owl/ObjectProperty and :owl/DatatypeProperty
+
+These are subclasses of :rdf/Property.
+
+* The Exercise
+
+Implement the following functions, using either the provided RDF sample data in starfleet.txt 
+
+** Class Membership
+
+Given an RDF graph G, and an Entity URI E, write a function that
+returns a set of all the classes CS to which E belongs.
+
+classes(E, G) => #{CS}
+
+** Property Domain
+
+Given an RDF graph G, and an entity URI E, write a function that returns a set of all the properties PS for which E is the domain.
+
+entity-domain-properties(E, G) => #{PS}
+
+** Property Range
+
+Given an RDF graph G, and an entity URI E, write a function that returns a set of all the properties PS for which E is the range.
+
+entity-range-properties(E, G) => #{PS}
+
+** Invalid Triples
+
+Given an RDF graph G, return a list of triples which are invalid, because the subject or object doesn't match the predicate domain/range.
+
+invalid-triples(G) => #{triples}

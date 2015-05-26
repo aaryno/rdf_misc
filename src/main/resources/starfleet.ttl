@@ -1,0 +1,236 @@
+# baseURI: http://mphasis.com/renegade/test/starfleet/
+
+@prefix sflt: <http://mphasis.com/renegade/test/starfleet/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+### Classes
+
+sflt:Group rdf:type owl:Class ;
+           rdfs:label "Group - Starfleet, KDF, etc" ;
+.
+
+sflt:Ship rdf:type owl:Class ;
+          rdfs:label "Class for ships" ;
+.
+
+sflt:StarShip rdf:type owl:Class ;
+              rdfs:label "Class for Starships" ;
+              rdfs:subClassOf sflt:Ship ;
+.
+
+sflt:Cruiser rdf:type owl:Class ;
+             rdfs:label "Cruiser ships" ;
+             rdfs:subClassOf sflt:StarShip ;
+.
+
+sflt:GalaxyClass rdf:type owl:Class ;
+                 rdfs:label "The powerful Galaxy Class Starship" ;
+                 rdfs:subClassOf sflt:StarShip ;
+.
+
+sflt:Shuttlecraft rdf:type owl:Class ;
+                  rdfs:label "Shuttlecraft" ;
+                  rdfs:subClassOf sflt:Ship ;
+.
+
+sflt:Officer rdf:type owl:Class ;
+             rdfs:label "Officers" ;
+.
+
+sflt:Rank rdf:type owl:Class ;
+          rdfs:label "Officer rank" ;
+.
+
+sflt:Nameable rdf:type owl:Class ;
+              rdfs:label "The class of nameable things" ;
+.
+
+sflt:Weapon rdf:type owl:Class ;
+            rdfs:label "A Weapon" ;
+.
+
+sflt:FederationWeapon rdf:type owl:Class ;
+                      rdfs:subClassOf sflt:Weapon ;
+                      rdfs:label "Weapons used by the Federation." ;
+.
+
+sflt:Mission rdf:type owl:Class ;
+    rdfs:label "A mission" ;
+.
+
+sflt:BattleMission rdf:type owl:Class ;
+    rdfs:label "A Battle mission" ;
+    rdfs:subClassOf sflt:Mission ;
+.
+
+sflt:PrimeDirectiveViolation rdf:type owl:Class ;
+    rdfs:label "It's against regulation, but..." ;
+.
+
+### Predicates
+
+sflt:hasShip rdf:type owl:ObjectProperty ;
+    rdfs:label "Group has ship" ;
+    rdfs:domain sflt:Group ;
+    rdfs:range sflt:Ship ;
+.
+
+sflt:hasRank rdf:type owl:ObjectProperty ;
+             rdfs:label "Officer's Rank" ;
+             rdfs:domain sflt:Officer ;
+             rdfs:range sflt:Rank ;
+.
+
+sflt:eligibleFor rdf:type owl:ObjectProperty ;
+                 rdfs:label "Rank eligibility" ;
+                 rdfs:domain sflt:Officer ;
+                 rdfs:range sflt:Rank ;
+.
+
+sflt:hasOfficer rdf:type owl:ObjectProperty ;
+                rdfs:label "An officer assigned to a ship" ;
+                rdfs:domain sflt:Ship ;
+                rdfs:range sflt:Officer ;
+.
+
+sflt:hasName rdf:type owl:DatatypeProperty ;
+    rdfs:label "Officer name" ;
+    rdfs:domain sflt:Nameable ;
+    rdfs:range xsd:string ;
+.
+
+sflt:hasMission rdf:type owl:ObjectProperty ;
+    rdfs:label "A ship's mission" ;
+    rdfs:domain sflt:Ship ;
+    rdfs:range sflt:Mission ;
+.
+
+sflt:hasWeapon rdf:type owl:ObjectProperty ;
+               rdfs:label "Has a weapon." ;
+               rdfs:domain sflt:Ship ;
+               rdfs:range sflt:Weapon ;
+.
+
+sflt:hasShuttle rdf:type owl:ObjectProperty ;
+                rdfs:label "Shuttlecraft on a StarShip";
+                rdfs:domain sflt:StarShip ;
+                rdfs:range sflt:Shuttlecraft ;
+.
+
+sflt:hasExplanation rdf:type owl:DatatypeProperty ;
+    rdfs:label "The explanation for the violation" ;
+    rdfs:domain sflt:PrimeDirectiveViolation ;
+    rdfs:range xsd:string ;
+.
+
+
+### Base Entities
+
+sflt:Starfleet rdf:type sflt:Group ;
+    rdfs:label "Federation Starfleet" ;
+.
+
+sflt:Phaser rdf:type sflt:FederationWeapon ;
+            rdfs:label "The best diplomat that I know is a fully-loaded phaser bank." ;
+.
+
+sflt:PhotonTorpedo rdf:type sflt:Weapon ;
+                   rdfs:label "Aft torpedoes, FIRE!" ;
+.
+
+sflt:Ensign rdf:type sflt:Rank ;
+            rdfs:label "Ensign" ;
+.
+
+sflt:LieutenantJG rdf:type sflt:Rank ;
+                  rdfs:label "Lietenant Junior Grade" ;
+.
+
+sflt:Lieutenant rdf:type sflt:Rank ;
+                rdfs:label "Lietenant" ;
+.
+
+sflt:LieutenantCommander rdf:type sflt:Rank ;
+                         rdfs:label "Lietenant Commander" ;
+.
+
+sflt:Commander rdf:type sflt:Rank ;
+               rdfs:label "Commander" ;
+.
+
+sflt:Captain rdf:type sflt:Rank ;
+             rdfs:label "Captain" ;
+.
+
+sflt:Admiral rdf:type sflt:Rank ;
+             rdfs:label "Admiral" ;
+.
+
+### Data entities
+
+sflt:Picard rdf:type sflt:Officer, sflt:Nameable ;
+            rdfs:label "Jean-Luc Picard" ;
+            sflt:hasName "Jean-Luc Picard" ;
+            sflt:hasRank sflt:Captain ;
+            sflt:eligibleFor sflt:Captain, sflt:Admiral ;
+.
+
+sflt:Riker rdf:type sflt:Officer, sflt:Nameable ;
+           rdfs:label "William T. Riker" ;
+           sflt:hasName "William T. Riker" ;
+           sflt:hasRank sflt:Commander ;
+           sflt:eligibleFor sflt:Commander, sflt:Captain ;
+.
+
+sflt:Data rdf:type sflt:Officer, sflt:Nameable ;
+          rdfs:label "Data" ;
+          sflt:hasName "Data" ;
+          sflt:hasRank sflt:LieutenantCommander ;
+          sflt:eligibleFor sflt:Commander, sflt:LieutenantCommander ;
+.
+
+sflt:LaForge rdf:type sflt:Officer, sflt:Nameable ;
+             rdfs:label "Geordie LaForge" ;
+             sflt:hasName "Geordie LaForge" ;
+             sflt:hasRank sflt:LieutenantCommander ;
+             sflt:eligibleFor sflt:LieutenantCommander ;
+.
+
+sflt:Worf rdf:type sflt:Officer ;
+    rdfs:label "Worf" ;
+    sflt:hasName "Worf" ;
+    sflt:hasRank sflt:LieutenantCommander ;
+    sflt:eligibleFor sflt:LieutenantCommander,  sflt:Commander ;
+.
+
+sflt:DrCrusher rdf:type sflt:Officer, sflt:Nameable ;
+               rdfs:label "Dr. Beverly Crusher" ;
+               sflt:hasName "Dr. Beverly Crusher" ;
+               sflt:hasRank sflt:Commander ;
+               sflt:eligibleFor sflt:Commander ;
+.
+
+sflt:Troi rdf:type sflt:Officer, sflt:Nameable ;
+          rdfs:label "Counselor Deanna Troi" ;
+          sflt:hasName "Counselor Deanna Troi" ;
+          sflt:hasRank sflt:Commander ;
+          sflt:eligibleFor sflt:Commander ;
+.
+
+sflt:Goddard rdf:type sflt:Shuttlecraft, sflt:Nameable ;
+             sflt:hasName "Goddard (NCC-1701-D/15)";
+             sflt:hasWeapon sflt:Phaser ;
+.
+
+sflt:Enterprise-D rdf:type sflt:GalaxyClass, sflt:Nameable ;
+    sflt:hasWeapon sflt:Phaser, sflt:PhotonTorpedo ;
+    sflt:hasOfficer sflt:Picard, sflt:Riker, sflt:Data, sflt:LaForge, sflt:Worf, sflt:DrCrusher, sflt:Troi ;
+    rdfs:label "Enterprise-D" ;
+    sflt:hasName "Enterprise-D" ;
+.
+
+sflt:Starfleet sflt:hasShip sflt:Enterprise-D ;

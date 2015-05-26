@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>instructions</title>
+<!-- 2015-03-31 Tue 14:27 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Michael Gaare" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">instructions</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. Basics of RDF</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Abbreviated Prefixes</a></li>
+<li><a href="#sec-2-2">2.2. Clojure Syntax</a></li>
+<li><a href="#sec-2-3">2.3. RDF Classes</a></li>
+<li><a href="#sec-2-4">2.4. RDF Properties</a></li>
+<li><a href="#sec-2-5">2.5. RDF Literal Values</a></li>
+<li><a href="#sec-2-6">2.6. Summary of the Semantics</a>
+<ul>
+<li><a href="#sec-2-6-1">2.6.1. :rdf/type</a></li>
+<li><a href="#sec-2-6-2">2.6.2. :rdfs/Class</a></li>
+<li><a href="#sec-2-6-3">2.6.3. :rdfs/subClassOf</a></li>
+<li><a href="#sec-2-6-4">2.6.4. :rdfs/domain and :rdfs/range</a></li>
+<li><a href="#sec-2-6-5">2.6.5. :owl/Class</a></li>
+<li><a href="#sec-2-6-6">2.6.6. :owl/ObjectProperty and :owl/DatatypeProperty</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. The Exercise</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Class Membership</a></li>
+<li><a href="#sec-3-2">3.2. Property Domain</a></li>
+<li><a href="#sec-3-3">3.3. Property Range</a></li>
+<li><a href="#sec-3-4">3.4. Invalid Triples</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The purpose of this exercise is to implement several functions that
+operate on graphs of RDF data. In addition to this instructions file,
+there are two other files related to the exercise.
+</p>
+
+<dl class="org-dl">
+<dt> starfleet.txt </dt><dd>This is the sample data file. This contains a
+representation of the sample RDF graph that can be
+used natively in Clojure, or easily parsed into
+collections in most languages.
+</dd>
+<dt> starfleet.ttl </dt><dd>This is the turtle-syntax version of the sample
+data. It's somewhat more human-readable, and
+contains the prefix imports which, although not
+needed, do give some information about where the
+URIs are coming from.
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Basics of RDF</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+An RDF graph is natively represented as a collection of triples
+(3-tuples) in the form of: [subject predicate object] &#x2013; or [s p o] as
+a common abbreviation.
+</p>
+
+<p>
+Some basic rules:
+</p>
+
+<p>
+RDF triple Subjects and Predicates are always Entities. Entities are
+referenced as URIs. Triple Objects can be either Entities or literal
+values (strings, numbers, etc).
+</p>
+
+<p>
+A collection of triples works on set semantics - the order of triples
+within the collection is undefined, and repeating a triple is
+idempotent.
+</p>
+
+<p>
+Here is an example RDF triple, from the base RDF namespace:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-rdf">[&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#Property&gt;
+ &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;
+ &lt;http://www.w3.org/2000/01/rdf-schema#Class&gt;]
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Abbreviated Prefixes</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+However, repeatedly stating these long URIs, many of which have common
+roots, is wasteful. So we use a prefixed syntax. If you look at the
+top of starfleet.ttl, you see a number of prefix declarations,
+including:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ttl">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+</pre>
+</div>
+
+<p>
+With these prefixes, we can rewrite the example triple as follows:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-rdf">[rdf:Property rdf:type rdfs:Class]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Clojure Syntax</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+In the starfleet.txt data file, we make a further transformation,
+converting these prefixed URIs into Clojure keywords. In this format,
+the example triple looks like:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure">[:rdf/Property :rdf/type :rdfs/Class]
+</pre>
+</div>
+
+<p>
+For those unfamiliar with Clojure, keywords are a type of symbol with
+two parts: optional namespace, and name. Keywords are colon-prefixed,
+and the optional namespace part will be followed by a / and the
+name. Here we use keywords to represent RDF entity URIs, with the URI
+prefix as the keyword namespace and the entity name as the keyword name.
+</p>
+
+<p>
+The Clojure format will be used for the remainder of this document.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> RDF Classes</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Classes in RDF are themselves entities. They belong to the class
+of :rdfs/Class. The classes to which an entity directly belongs are
+specified with the :rdf/type predicate. Sub-classing is also possible,
+through the :rdfs/subClassOf predicate. This set of triples defines a
+class, :example/Thing, which is a subClass of :example/SuperThing :
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure">[[:example/Thing :rdf/type :rdfs/Class]
+ [:example/Thing :rdfs/subClassOf :example/SuperThing]
+ [:example/SuperThing :rdf/type :rdfs/Class]]
+</pre>
+</div>
+
+<p>
+If an entity belongs to a class, it also belongs to every class for
+which that class is a subclass, recursively.
+</p>
+
+<p>
+Child classes inherit the properties of their parent classes, as well
+as membership.
+</p>
+
+<p>
+Classes have set semantics in RDF.
+</p>
+
+<p>
+The entity :owl/Class is a subclass of :rdfs/Class.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> RDF Properties</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Things that can be used as triple Predicates are called
+Properties. They belong to the class :rdf/Property. Two of their key
+attributes are :rdfs/domain and :rdfs/range.
+</p>
+
+<dl class="org-dl">
+<dt> :rdfs/domain </dt><dd>Specifies what classes or types can be the Subject
+of triples in which the Property is the Predicate.
+</dd>
+<dt> :rdfs/range </dt><dd>Specifies what classes or types can be the Object of
+triples in which the Property is the Predicate.
+</dd>
+</dl>
+
+<p>
+This set of triples defines a Property, :example/hasColor, and defines
+its range and domain. Then it shows a valid use of the property.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure">[[:example/hasColor :rdf/type :rdf/Property]
+ [:example/hasColor :rdfs/domain :example/Car]
+ [:example/hasColor :rdfs/range :example/Color]
+ [:example/Car :rdf/type :rdfs/Class]
+ [:example/Ferrari :rdf/type :example/Car]
+ [:example/Red :rdf/type :example/Color]
+ [:example/Ferrari :example/hasColor :example/Red]]
+</pre>
+</div>
+
+<p>
+The triple <code>[:example/Ferrari :example/hasColor :example/Red]</code> is
+valid, because:
+</p>
+<ul class="org-ul">
+<li>The domain of :example/hasColor is :example/Car, and the Subject
+is :example/Ferrari which belongs to the class of :example/Car.
+</li>
+<li>The range of :example/hasColor is :example/Color, and the Object
+is :example/Red which belongs to the class of :example/Color.
+</li>
+</ul>
+
+<p>
+The entity :owl/DatatypeProperty is a subclass of :rdf/Property, and
+carries the additional restriction that its range must be a literal
+type.
+</p>
+
+<p>
+The entity :owl/ObjectProperty is a subclass of :rdf/Property, and
+carries the additional restriction that its range must be a class.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> RDF Literal Values</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+RDF borrows its value types from the XML Schema Definition, which is
+conventionally prefixed as xsd. In the sample data file, only one of
+these types is used: :xsd/string which is the basic string type. There
+are many others, including various numeric types, date and time types,
+etc., but for the purposes of this exercise :xsd/string is the only
+one that is relevant.
+</p>
+
+<p>
+Properties - particularly those of type :owl/DatatypeProperty - can
+have a range of :xsd/string.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Summary of the Semantics</h3>
+<div class="outline-text-3" id="text-2-6">
+</div><div id="outline-container-sec-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1"><span class="section-number-4">2.6.1</span> :rdf/type</h4>
+<div class="outline-text-4" id="text-2-6-1">
+<p>
+Specifies Entity class membership. An Entity can be the direct member
+of multiple classes. In other words, this is valid:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure">[[:example/Joe :rdf/type :example/Human]
+ [:example/Joe :rdf/type :example/Plumber]]
+</pre>
+</div>
+
+<p>
+It says that :example/Joe belongs to the classes of :example/Human
+and :example/Plumber.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6-2" class="outline-4">
+<h4 id="sec-2-6-2"><span class="section-number-4">2.6.2</span> :rdfs/Class</h4>
+<div class="outline-text-4" id="text-2-6-2">
+<p>
+The class of Classes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6-3" class="outline-4">
+<h4 id="sec-2-6-3"><span class="section-number-4">2.6.3</span> :rdfs/subClassOf</h4>
+<div class="outline-text-4" id="text-2-6-3">
+<p>
+Property specifying subclass relationship, where a triple in the form
+of <code>[:example/ChildClass :rdfs/subClassOf :example/ParentClass]</code>
+specifies that :example/ChildClass is a subclass
+of :example/ParentClass, and therefore :example/ParentClass is a
+superclass of :example/ChildClass.
+</p>
+
+<p>
+A class can be the subclass of multiple parent classes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6-4" class="outline-4">
+<h4 id="sec-2-6-4"><span class="section-number-4">2.6.4</span> :rdfs/domain and :rdfs/range</h4>
+<div class="outline-text-4" id="text-2-6-4">
+<p>
+For a Property P, :rdfs/domain specifies that any entities that are
+the Subject of triples with predicate P must belong to the class
+specified by :rdfs/domain, and :rdfs/range specifies that entities
+that are the Object of the triples with predicate P must belong to the
+class specified by :rdfs/range.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6-5" class="outline-4">
+<h4 id="sec-2-6-5"><span class="section-number-4">2.6.5</span> :owl/Class</h4>
+<div class="outline-text-4" id="text-2-6-5">
+<p>
+This is a subclass of :rdfs/Class
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6-6" class="outline-4">
+<h4 id="sec-2-6-6"><span class="section-number-4">2.6.6</span> :owl/ObjectProperty and :owl/DatatypeProperty</h4>
+<div class="outline-text-4" id="text-2-6-6">
+<p>
+These are subclasses of :rdf/Property.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> The Exercise</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Implement the following functions, using either the provided RDF sample data in starfleet.txt
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Class Membership</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Given an RDF graph G, and an Entity URI E, write a function that
+returns a set of all the classes CS to which E belongs.
+</p>
+
+<p>
+classes(E, G) =&gt; #{CS}
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Property Domain</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Given an RDF graph G, and an entity URI E, write a function that returns a set of all the properties PS for which E is the domain.
+</p>
+
+<p>
+entity-domain-properties(E, G) =&gt; #{PS}
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Property Range</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Given an RDF graph G, and an entity URI E, write a function that returns a set of all the properties PS for which E is the range.
+</p>
+
+<p>
+entity-range-properties(E, G) =&gt; #{PS}
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Invalid Triples</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Given an RDF graph G, return a list of triples which are invalid, because the subject or object doesn't match the predicate domain/range.
+</p>
+
+<p>
+invalid-triples(G) =&gt; #{triples}
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Michael Gaare</p>
+<p class="date">Created: 2015-03-31 Tue 14:27</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.50.1 (<a href="http://orgmode.org">Org</a> mode 8.2.6)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
